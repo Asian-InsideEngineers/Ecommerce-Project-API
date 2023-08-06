@@ -11,7 +11,7 @@ const customer_Controller = {
       return res.json({
         success: true,
         data: new_Users,
-        message: "New Customer Added!",
+        message: "Success! Membership Generated!",
       });
     } catch (ex) {
       return res.json({ success: false, message: ex });
@@ -21,7 +21,9 @@ const customer_Controller = {
   signIn: async function (req, res) {
     try {
       const { email, password } = req.body;
-      const find_User = await user_model.findOne({ email: email });
+      const find_User = await user_model.findOne({
+        email: email,
+      });
       if (!find_User) {
         return res.json({
           success: false,
