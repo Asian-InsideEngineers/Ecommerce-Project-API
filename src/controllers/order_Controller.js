@@ -1,14 +1,21 @@
 const order_Models = require("./../models/order_Model");
+const cart_Model = require("./../models/cart_Model");
 
 const order_Controller = {
   create_Order: async function (req, res) {
     try {
-      const { Customers, items } = req.body;
+      const { Customers: Customers, items } = req.body;
       const new_Order = new order_Models({
         Customers: Customers,
         items: items,
       });
+
       await new_Order.save();
+
+      await cart_Model.findOneAndUpdate(
+        { Customers: Customers._id },
+        { items: [] }
+      );
 
       return res.json({
         success: true,
@@ -26,13 +33,13 @@ const order_Controller = {
     try {
       const CustomerId = req.params.CustomerId;
       const find_Orders = await order_Models.find({
-        "Customers.id": CustomerId,
+        "Customers._id": CustomerId,
       });
 
       return res.json({
         success: true,
         data: find_Orders,
-        message: "Products Fetched!",
+        message: "Orders Fetched!",
       });
     } catch (error) {
       return res.json({ success: false, message: error });

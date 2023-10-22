@@ -1,14 +1,13 @@
 const { Schema, model } = require("mongoose");
 
 const order_Parameters = new Schema({
-  Products: {
+  varients: {
     type: Map,
-    default: 1,
     required: true,
   },
-  Quantity: {
-    type: Number,
+  quantity: {
     default: 1,
+    type: Number,
   },
 });
 const order_Schema = new Schema({
@@ -18,7 +17,7 @@ const order_Schema = new Schema({
   },
   items: {
     type: [order_Parameters],
-    ref: "Customers",
+    ref: "Carts",
     required: true,
   },
   status: {

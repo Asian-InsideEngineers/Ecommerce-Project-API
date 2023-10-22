@@ -1,15 +1,14 @@
 const { Schema, model } = require("mongoose");
 
 const schema_For_Cartitem = new Schema({
-  Products: {
+  varients: {
     type: Schema.Types.ObjectId,
-    ref: "Products",
-    default: 1,
+    ref: "Varients",
     required: true,
   },
-  Quantity: {
+  quantity: {
     type: Number,
-    default: 1,
+    required: true,
   },
 });
 const cart_Schema = new Schema({
@@ -20,7 +19,6 @@ const cart_Schema = new Schema({
   },
   items: {
     type: [schema_For_Cartitem],
-    ref: "Customers",
     required: true,
   },
 

@@ -5,19 +5,14 @@ const bcrypt = require("bcrypt");
 
 const user_Schema = new Schema({
   id: { type: String, unique: true },
-
-  email: { type: String, require: true },
-  password: { type: String, require: true },
-
-  fullname: { type: String, default: "" },
-  state: { type: String, default: "" },
-  city: { type: String, default: "" },
+  email: { type: String, required: true },
+  password: { type: String, required: true },
+  fullname: { type: String },
+  state: { type: String, default: "Mahrashtra" },
+  city: { type: String, default: "Mumbai" },
   address: { type: String, default: "" },
-  pincode: { type: String, default: "" },
-  phoneno: { type: String, default: "" },
-
-  profileprogress: { type: Number, default: "0" },
-
+  pincode: { type: Number, default: "" },
+  phoneno: { type: Number, default: "" },
   updatedon: { type: Date },
   createdon: { type: Date },
 });
@@ -35,11 +30,10 @@ user_Schema.pre("save", function (next) {
 });
 
 user_Schema.pre(["update", "findOneAndUpdate", "updateOne"], function (next) {
-  const update = this.getupdates();
+  const update = this.getUpdate(); // Use getUpdate(), not getupdates()
   delete update._id;
   delete update.id;
   this.updatedon = new Date();
-
   next();
 });
 

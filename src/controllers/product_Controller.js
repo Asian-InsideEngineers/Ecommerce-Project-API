@@ -20,12 +20,28 @@ const product_Controller = {
   },
   fetch_Products: async function (req, res) {
     try {
-      const product_Model = await products_Model.find();
+      const product_Model = await products_Model.find().populate("category");
 
       return res.json({
         success: true,
         data: product_Model,
         message: "Products Fetched!",
+      });
+    } catch (error) {
+      return res.json({ success: false, message: error });
+    }
+  },
+  fetch_ProductsById: async function (req, res) {
+    try {
+      const CategoryId = req.params.id;
+      const product_Model_By_Id = await products_Model.find({
+        category: CategoryId,
+      });
+
+      return res.json({
+        success: true,
+        data: product_Model_By_Id,
+        message: "Products Fetched! using Category ID",
       });
     } catch (error) {
       return res.json({ success: false, message: error });

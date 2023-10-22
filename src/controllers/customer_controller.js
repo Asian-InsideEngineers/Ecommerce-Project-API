@@ -14,7 +14,7 @@ const customer_Controller = {
         message: "Success! Membership Generated!",
       });
     } catch (ex) {
-      return res.json({ success: false, message: ex });
+      return res.json({ success: false, message: ex.message }); // Return the error message.
     }
   },
 
@@ -42,7 +42,31 @@ const customer_Controller = {
 
       return res.json({ success: true, data: find_User });
     } catch (ex) {
-      return res.json({ success: false, message: ex });
+      return res.json({ success: false, message: ex.message }); // Return the error message.
+    }
+  },
+
+  Updateuser: async function (req, res) {
+    try {
+      const userId = req.params.id;
+      const updatedata = req.body;
+      console.log("userId:", userId);
+      console.log("updatedata:", updatedata);
+      const updateduser = await user_model.findByIdAndUpdate(
+        { _id: userId },
+        updatedata,
+        { new: true }
+      );
+      if (!updateduser) {
+        throw new Error("User not found"); // Use Error to provide a meaningful error message.
+      }
+      return res.json({
+        success: true,
+        data: updateduser,
+        message: "User profile updated",
+      });
+    } catch (ex) {
+      return res.json({ success: false, message: ex.message }); // Return the error message.
     }
   },
 };

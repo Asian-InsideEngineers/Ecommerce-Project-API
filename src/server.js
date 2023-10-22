@@ -24,6 +24,8 @@ app.use("/api/Categories", categories_Routes);
 
 const Products_Routes = require("./routes/product_Routes");
 app.use("/api/Products", Products_Routes);
+const varients_Routes = require("./routes/varient_Routes");
+app.use("/api/varients", varients_Routes);
 
 const cart_Routes = require("./routes/cart_Routes");
 app.use("/api/carts", cart_Routes);
@@ -35,5 +37,5 @@ app.use("/api/orders", order_Routes);
 //     res.json({success: True, Message: "Welcome to inside systems" });
 
 // });
-
+const PORT = process.env.PORT || 2000;
 app.listen(2000, () => console.log(`Server started at port: 2000`));

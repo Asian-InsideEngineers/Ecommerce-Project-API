@@ -1,8 +1,9 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, trusted } = require("mongoose");
 
 const categories_Schema = new Schema({
   title: { type: String, required: [true, "Categorytitle"] },
   description: { type: String, default: "" },
+  image: { type: String, required: true, default: "" },
   updatedon: { type: Date },
   createdon: { type: Date },
 });
