@@ -11,10 +11,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(helmet());
 app.use(morgan("dev"));
 app.use(cors());
+const mongodbpath =
+  "mongodb+srv://welcomemall2000:shantilaljipatelsir@insideengineers.lc8qbps.mongodb.net/WelcomeStore?retryWrites=true&w=majority";
 
-mongoose.connect(
-  "mongodb+srv://welcomemall2000:shantilaljipatelsir@insideengineers.lc8qbps.mongodb.net/WelcomeStore?retryWrites=true&w=majority"
-);
+mongoose.connect(mongodbpath);
 
 const customer_Routes = require("./routes/customer_Route");
 app.use("/api/Customers", customer_Routes);
@@ -38,4 +38,4 @@ app.use("/api/orders", order_Routes);
 
 // });
 const PORT = process.env.PORT || 2000;
-app.listen(2000, () => console.log(`Server started at port: 2000`));
+app.listen(PORT, () => console.log(`Server started at port:` + PORT));
