@@ -11,10 +11,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(helmet());
 app.use(morgan("dev"));
 app.use(cors());
+
 const mongodbpath =
   "mongodb+srv://welcomemall2000:shantilaljipatelsir@insideengineers.lc8qbps.mongodb.net/WelcomeStore?retryWrites=true&w=majority";
 
-mongoose.connect(mongodbpath);
+mongoose.connect(mongodbpath).then(function () {
+  app.get("/", function (req, res) {
+    res.json({
+      success: true,
+      Message: "Welcome Mall Ecommerce Server Active",
+    });
+  });
+});
 
 const customer_Routes = require("./routes/customer_Route");
 app.use("/api/Customers", customer_Routes);
@@ -33,9 +41,5 @@ app.use("/api/carts", cart_Routes);
 const order_Routes = require("./routes/order_Routes");
 app.use("/api/orders", order_Routes);
 
-// app.get("/", function(req, res){
-//     res.json({success: True, Message: "Welcome to inside systems" });
-
-// });
 const PORT = process.env.PORT || 2000;
 app.listen(PORT, () => console.log(`Server started at port:` + PORT));
